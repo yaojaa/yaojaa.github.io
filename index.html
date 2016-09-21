@@ -238,6 +238,95 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-webpack" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/21/webpack/" class="article-date">
+      <time datetime="2016-09-21T02:57:36.000Z" itemprop="datePublished">2016-09-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/21/webpack/">webpack</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h1><p>安装命令<br>$ npm install webpack -g<br>使用webpack<br>$ npm init  # 会自动生成一个package.json文件<br>$ npm install webpack –save-dev #将webpack增加到package.json文件中<br>可以使用不同的版本<br>$ npm install webpack@1.2.x –save-dev<br>如果想要安装开发工具<br>$ npm install webpack-dev-server –save-dev</p>
+<h1 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h1><p>Webpack 本身只能处理 JavaScript 模块，如果要处理其他类型的文件，就需要使用 loader 进行转换。</p>
+<p>Loader 可以理解为是模块和资源的转换器，它本身是一个函数，接受源文件作为参数，返回转换的结果。这样，我们就可以通过 <code>require</code> 来加载任何类型的模块或文件，比如 CoffeeScript、 JSX、 LESS 或图片。</p>
+<p>先来看看 loader 有哪些特性？</p>
+<ul>
+<li>Loader 可以通过管道方式链式调用，每个 loader 可以把资源转换成任意格式并传递给下一个 loader ，但是最后一个 loader 必须返回 JavaScript。</li>
+<li>Loader 可以同步或异步执行。</li>
+<li>Loader 运行在 node.js 环境中，所以可以做任何可能的事情。</li>
+<li>Loader 可以接受参数，以此来传递配置项给 loader。</li>
+<li>Loader 可以通过文件扩展名（或正则表达式）绑定给不同类型的文件。</li>
+<li>Loader 可以通过 <code>npm</code> 发布和安装。</li>
+<li>除了通过 <code>package.json</code> 的 <code>main</code> 指定，通常的模块也可以导出一个 loader 来使用。</li>
+<li>Loader 可以访问配置。</li>
+<li>插件可以让 loader 拥有更多特性。</li>
+<li>Loader 可以分发出附加的任意文件。</li>
+</ul>
+<p>Loader 本身也是运行在 node.js 环境中的 JavaScript 模块，它通常会返回一个函数。大多数情况下，我们通过 npm 来管理 loader，但是你也可以在项目中自己写 loader 模块。</p>
+<p>按照惯例，而非必须，loader 一般以 <code>xxx-loader</code> 的方式命名，<code>xxx</code> 代表了这个 loader 要做的转换功能，比如 <code>json-loader</code>。</p>
+<p>在引用 loader 的时候可以使用全名 <code>json-loader</code>，或者使用短名 <code>json</code>。这个命名规则和搜索优先级顺序在 webpack 的 <code>resolveLoader.moduleTemplates</code> api 中定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Default: [&quot;*-webpack-loader&quot;, &quot;*-web-loader&quot;, &quot;*-loader&quot;, &quot;*&quot;]</div></pre></td></tr></table></figure>
+<p>Loader 可以在 <code>require()</code> 引用模块的时候添加，也可以在 webpack 全局配置中进行绑定，还可以通过命令行的方式使用。</p>
+<p>接上一节的例子，我们要在页面中引入一个 CSS 文件 style.css，首页将 style.css 也看成是一个模块，然后用 <code>css-loader</code> 来读取它，再用 <code>style-loader</code> 把它插入到页面中。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* style.css */</span></div><div class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">background</span>: yellow; &#125;</div></pre></td></tr></table></figure>
+<p>修改 entry.js：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">"!style!css!./style.css"</span>) <span class="comment">// 载入 style.css</span></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'It works.'</span>)</div><div class="line"><span class="built_in">document</span>.write(<span class="built_in">require</span>(<span class="string">'./module.js'</span>))</div></pre></td></tr></table></figure>
+<p>安装 loader：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install css-loader style-loader</div></pre></td></tr></table></figure>
+<p>重新编译打包，刷新页面，就可以看到黄色的页面背景了。</p>
+<p>如果每次 <code>require</code> CSS 文件的时候都要写 loader 前缀，是一件很繁琐的事情。我们可以根据模块类型（扩展名）来自动绑定需要的 loader。</p>
+<p>将 entry.js 中的 <code>require(&quot;!style!css!./style.css&quot;)</code> 修改为 <code>require(&quot;./style.css&quot;)</code> ，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ webpack entry.js bundle.js --module-bind <span class="string">'css=style!css'</span></div><div class="line"></div><div class="line"><span class="comment"># 有些环境下可能需要使用双引号</span></div><div class="line">$ webpack entry.js bundle.js --module-bind <span class="string">"css=style!css"</span></div></pre></td></tr></table></figure>
+<p>显然，这两种使用 loader 的方式，效果是一样的。</p>
+<h1 id="config"><a href="#config" class="headerlink" title="config"></a>config</h1><p>每个项目下都必须配置有一个 webpack.config.js</p>
+<p>基本示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">    entry: &quot;./entry.js&quot;,</div><div class="line">    output: &#123;</div><div class="line">        path: __dirname,</div><div class="line">        filename: &quot;bundle.js&quot;</div><div class="line">    &#125;,</div><div class="line">    module: &#123;</div><div class="line">        loaders: [</div><div class="line">            &#123; test: /\.css$/, loader: &quot;style!css&quot; &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>下面是一个较完整的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">var webpack = require(&apos;webpack&apos;);</div><div class="line">var commonsPlugin = new webpack.optimize.CommonsChunkPlugin(&apos;common.js&apos;);</div><div class="line">module.exports = &#123;</div><div class="line">    //插件项</div><div class="line">    plugins: [commonsPlugin],</div><div class="line">    //页面入口文件配置</div><div class="line">    entry: &#123;</div><div class="line">        index : &apos;./src/js/page/index.js&apos;</div><div class="line">    &#125;,</div><div class="line">    //入口文件输出配置</div><div class="line">    output: &#123;</div><div class="line">        path: &apos;dist/js/page&apos;,</div><div class="line">        filename: &apos;[name].js&apos;</div><div class="line">    &#125;,</div><div class="line">    module: &#123;</div><div class="line">        //加载器配置</div><div class="line">        loaders: [</div><div class="line">            &#123; test: /\.css$/, loader: &apos;style-loader!css-loader&apos; &#125;,</div><div class="line">            &#123; test: /\.js$/, loader: &apos;jsx-loader?harmony&apos; &#125;,</div><div class="line">            &#123; test: /\.scss$/, loader: &apos;style!css!sass?sourceMap&apos;&#125;,</div><div class="line">            &#123; test: /\.(png|jpg)$/, loader: &apos;url-loader?limit=8192&apos;&#125;</div><div class="line">        ]</div><div class="line">    &#125;,</div><div class="line">    //其它解决方案配置</div><div class="line">    resolve: &#123;</div><div class="line">        root: &apos;E:/github/flux-example/src&apos;, //绝对路径</div><div class="line">        extensions: [&apos;&apos;, &apos;.js&apos;, &apos;.json&apos;, &apos;.scss&apos;],</div><div class="line">        alias: &#123;</div><div class="line">            AppStore : &apos;js/stores/AppStores.js&apos;,</div><div class="line">            ActionType : &apos;js/actions/ActionType.js&apos;,</div><div class="line">            AppAction : &apos;js/actions/AppAction.js&apos;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>plugins 是插件项，这里我们使用了一个 CommonsChunkPlugin的插件，它用于提取多个入口文件的公共脚本部分，然后生成一个 common.js 来方便多页面之间进行复用。<br>entry 是页面入口文件配置，output 是对应输出项配置 （即入口文件最终要生成什么名字的文件、存放到哪里）<br>module.loaders 是最关键的一块配置。它告知 webpack 每一种文件都需要使用什么加载器来处理。 所有加载器需要使用npm来加载<br>最后是 resolve 配置，配置查找模块的路径和扩展名和别名（方便书写）</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-javascript高阶函数" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -274,10 +363,12 @@
 <p>编写高阶函数，就是让函数的参数能够接收别的函数。还有常见的事件绑定回调函数，ajax回调函数等都属于高阶函数。</p>
 <p>高阶函数之返回值输出<br>在JavaScript中，函数是第一类对象，其既可以作为参数传递，也可以作为其他函数的返回值输出。</p>
 <p>高阶函数还可作为一种模式的构造器，比如有若干排序算法（快排，冒泡，希尔等），就可以生成一个排序器。</p>
-<p>//排序器<br>var sortGenerator = function(sortFunc){<br>return function(args){<br> var arguments = [].slice.call(args);<br>     return sortFunc(arguments);<br>}};<br>//引入快速排序算法<br>var quickSort = require(‘quickSort.js’);<br>var quickSorter = sortingGenerator(quickSort);<br>//应用算法<br>quickSorter (4, 22, 44, 66, 77);<br>也许你会有疑惑我直接应用require进来的 quickSort() 就不行了。干嘛多此一举？多包装一层就可以干更多额外的事。比如测试每个排序算法的耗时。</p>
-<p>再举个ajax封装的列子，我们写好了一个简单ajax请求服务器数据的功能，接受两个参数method和callback。请求类型和回调。每次都传入请求类型很麻烦。那么我们生成两个新的函数一个ajaxGet一个ajaxPost。</p>
-<p>var ajaxGenerator=function(method){<br>          return function( callback ){<br>              ajax( method, ‘/url’,  callback  )<br>         }<br>}<br>var ajaxGet=ajaxGenerator(‘get’)<br>    ajaxGet(mycallback )</p>
-<p>var ajaxPost=ajaxGenerator(‘post’)<br>    ajaxPost(mycallback  )<br>以上像不像函数的柯里化，是的它属于高阶函数的降阶。</p>
+<p>//排序器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var sortGenerator = function(sortFunc)&#123;</div><div class="line">return function(args)&#123;       </div><div class="line"> var arguments = [].slice.call(args);</div><div class="line">     return sortFunc(arguments);    </div><div class="line">&#125;&#125;;</div></pre></td></tr></table></figure></p>
+<p>//引入快速排序算法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var quickSort = require(&apos;quickSort.js&apos;);</div><div class="line">var quickSorter = sortingGenerator(quickSort);</div></pre></td></tr></table></figure></p>
+<p>//应用算法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">quickSorter (4, 22, 44, 66, 77);</div></pre></td></tr></table></figure></p>
+<p>也许你会有疑惑我直接应用require进来的 quickSort() 就不行了。干嘛多此一举？多包装一层就可以干更多额外的事。比如测试每个排序算法的耗时。</p>
+<p>再举个ajax封装的列子，我们写好了一个简单ajax请求服务器数据的功能，接受两个参数method和callback。请求类型和回调。每次都传入请求类型很麻烦。那么我们生成两个新的函数一个ajaxGet一个ajaxPost。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var ajaxGenerator=function(method)&#123;</div><div class="line">          return function( callback )&#123;</div><div class="line">              ajax( method, &apos;/url&apos;,  callback  )</div><div class="line">         &#125;</div><div class="line">&#125;</div><div class="line">var ajaxGet=ajaxGenerator(&apos;get&apos;)</div><div class="line">    ajaxGet(mycallback )</div><div class="line"></div><div class="line">var ajaxPost=ajaxGenerator(&apos;post&apos;)</div><div class="line">    ajaxPost(mycallback  )</div></pre></td></tr></table></figure></p>
+<p>以上像不像函数的柯里化，是的它属于高阶函数的降阶。</p>
 
       
     </div>
