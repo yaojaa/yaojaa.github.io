@@ -3,18 +3,48 @@
 <head>
   <meta charset="utf-8">
   
-  <title>webpack | Jack White</title>
+  <title>webpack 使用 | Jack White</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="setup安装命令$ npm install webpack -g使用webpack$ npm init  # 会自动生成一个package.json文件$ npm install webpack –save-dev #将webpack增加到package.json文件中可以使用不同的版本$ npm install webpack@1.2.x –save-dev如果想要安装开发工具$ npm in">
+  <meta name="description" content="＃WebPack是什么
+
+一个打包工具
+一个模块加载工具
+各种资源都可以当成模块来处理
+网站 http://webpack.github.io/如今，越来越多的JavaScript代码被使用在页面上，我们添加很多的内容在浏览器里。如何去很好的组织这些代码，成为了一个必须要解决的难题。
+
+对于模块的组织，通常有如下几种方法：
+
+通过书写在不同文件中，使用script标签进行加载
+CommonJS进行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack">
+<meta property="og:title" content="webpack 使用">
 <meta property="og:url" content="http://yaojaa.github.io/2016/09/21/webpack/index.html">
 <meta property="og:site_name" content="Jack White">
-<meta property="og:description" content="setup安装命令$ npm install webpack -g使用webpack$ npm init  # 会自动生成一个package.json文件$ npm install webpack –save-dev #将webpack增加到package.json文件中可以使用不同的版本$ npm install webpack@1.2.x –save-dev如果想要安装开发工具$ npm in">
-<meta property="og:updated_time" content="2016-09-21T03:43:40.000Z">
+<meta property="og:description" content="＃WebPack是什么
+
+一个打包工具
+一个模块加载工具
+各种资源都可以当成模块来处理
+网站 http://webpack.github.io/如今，越来越多的JavaScript代码被使用在页面上，我们添加很多的内容在浏览器里。如何去很好的组织这些代码，成为了一个必须要解决的难题。
+
+对于模块的组织，通常有如下几种方法：
+
+通过书写在不同文件中，使用script标签进行加载
+CommonJS进行">
+<meta property="og:updated_time" content="2016-09-21T07:12:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webpack">
-<meta name="twitter:description" content="setup安装命令$ npm install webpack -g使用webpack$ npm init  # 会自动生成一个package.json文件$ npm install webpack –save-dev #将webpack增加到package.json文件中可以使用不同的版本$ npm install webpack@1.2.x –save-dev如果想要安装开发工具$ npm in">
+<meta name="twitter:title" content="webpack 使用">
+<meta name="twitter:description" content="＃WebPack是什么
+
+一个打包工具
+一个模块加载工具
+各种资源都可以当成模块来处理
+网站 http://webpack.github.io/如今，越来越多的JavaScript代码被使用在页面上，我们添加很多的内容在浏览器里。如何去很好的组织这些代码，成为了一个必须要解决的难题。
+
+对于模块的组织，通常有如下几种方法：
+
+通过书写在不同文件中，使用script标签进行加载
+CommonJS进行">
   
     <link rel="alternative" href="/atom.xml" title="Jack White" type="application/atom+xml">
   
@@ -160,7 +190,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/高阶函数/">高阶函数</a></li></ul>
                     </div>
                 </section>
                 
@@ -252,7 +282,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      webpack
+      webpack 使用
     </h1>
   
 
@@ -269,7 +299,21 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h1><p>安装命令<br>$ npm install webpack -g<br>使用webpack<br>$ npm init  # 会自动生成一个package.json文件<br>$ npm install webpack –save-dev #将webpack增加到package.json文件中<br>可以使用不同的版本<br>$ npm install webpack@1.2.x –save-dev<br>如果想要安装开发工具<br>$ npm install webpack-dev-server –save-dev</p>
+        <p>＃WebPack是什么</p>
+<ul>
+<li>一个打包工具</li>
+<li>一个模块加载工具</li>
+<li>各种资源都可以当成模块来处理</li>
+<li>网站 <a href="http://webpack.github.io/" target="_blank" rel="external">http://webpack.github.io/</a><br>如今，越来越多的JavaScript代码被使用在页面上，我们添加很多的内容在浏览器里。如何去很好的组织这些代码，成为了一个必须要解决的难题。</li>
+</ul>
+<p>对于模块的组织，通常有如下几种方法：</p>
+<ul>
+<li>通过书写在不同文件中，使用script标签进行加载</li>
+<li>CommonJS进行加载（NodeJS就使用这种方式）</li>
+<li>AMD进行加载（require.js使用这种方式）</li>
+<li>ES6模块</li>
+</ul>
+<h1 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h1><p>安装命令<br>$ npm install webpack -g<br>使用webpack<br>$ npm init  # 会自动生成一个package.json文件<br>$ npm install webpack –save-dev #将webpack增加到package.json文件中<br>可以使用不同的版本<br>$ npm install webpack@1.2.x –save-dev<br>如果想要安装开发工具<br>$ npm install webpack-dev-server –save-dev<br>$ webpack-dev-server –progress –colors<br>服务器可以自动生成和刷新，修改代码保存后自动更新画面<br>$ <a href="http://localhost:8080/webpack-dev-server/bundle" target="_blank" rel="external">http://localhost:8080/webpack-dev-server/bundle</a></p>
 <h1 id="Loader"><a href="#Loader" class="headerlink" title="Loader"></a>Loader</h1><p>Webpack 本身只能处理 JavaScript 模块，如果要处理其他类型的文件，就需要使用 loader 进行转换。</p>
 <p>Loader 可以理解为是模块和资源的转换器，它本身是一个函数，接受源文件作为参数，返回转换的结果。这样，我们就可以通过 <code>require</code> 来加载任何类型的模块或文件，比如 CoffeeScript、 JSX、 LESS 或图片。</p>
 <p>先来看看 loader 有哪些特性？</p>
@@ -313,12 +357,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/21/webpack/">webpack</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/21/webpack/">webpack 使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Jack White</a></p>
         <p><span>发布时间:</span>2016-09-21, 10:57:36</p>
-        <p><span>最后更新:</span>2016-09-21, 11:43:40</p>
+        <p><span>最后更新:</span>2016-09-21, 15:12:39</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/21/webpack/" title="webpack">http://yaojaa.github.io/2016/09/21/webpack/</a>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/21/webpack/" title="webpack 使用">http://yaojaa.github.io/2016/09/21/webpack/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yaojaa.github.io/2016/09/21/webpack/　　作者: Jack White" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -331,10 +375,16 @@
 
     <nav id="article-nav">
         
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/10/20/javascript之高阶函数/">
+                    javascript之高阶函数
+                </a>
+            </div>
+        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/09/12/javascript高阶函数/">
-                    javascript高阶函数
+                <a href="/2016/09/10/判断鼠标进入容器的方向/">
+                    判断鼠标进入容器的方向
                 </a>
             </div>
         
@@ -397,19 +447,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/10/20/javascript之高阶函数/" title="上一篇: javascript之高阶函数">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/09/12/javascript高阶函数/" title="下一篇: javascript高阶函数">
+            <a href="/2016/09/10/判断鼠标进入容器的方向/" title="下一篇: 判断鼠标进入容器的方向">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/webpack/">webpack</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/javascript高阶函数/">javascript高阶函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/判断鼠标进入容器的方向/">判断鼠标进入容器的方向</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/font-end-auto/">前端自动化构建平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/angular2-start/">angular2-start</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/hello-world/">使用Hexo搭建静态博客</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/20/javascript之高阶函数/">javascript之高阶函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/webpack/">webpack 使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/判断鼠标进入容器的方向/">判断鼠标进入容器的方向</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/font-end-auto/">前端自动化构建平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/angular2-start/">angular2-start</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/hello-world/">使用Hexo搭建静态博客</a></li></ul>
 
 
 
